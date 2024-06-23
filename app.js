@@ -3,11 +3,12 @@ const path = require("path");
 const mongoose =  require("mongoose");
 const methodOverride = require("method-override");
 const Campground = require("./models/campground");
+const ejsMate = require("ejs-mate");
 
 //database
-const uri = "mongodb+srv://Anubhav:Anubhav%40152000@campdiary.lqd08s3.mongodb.net/?retryWrites=true&w=majority&appName=CampDiary"
+const url = "mongodb+srv://Anubhav:Anubhav%40152000@campdiary.lqd08s3.mongodb.net/?retryWrites=true&w=majority&appName=CampDiary"
 
-mongoose.connect(uri);
+mongoose.connect(url);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
@@ -23,6 +24,7 @@ app.set("view engine", "ejs");
 app.set("", path.join(__dirname, 'views'));
 
 //parsing for post res
+app.engine("ejs", ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
