@@ -59,7 +59,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    console.log(req.session)
+    // console.log(req.session)
+    if(!['/login', '/'].includes(req.originUrl)){
+        req.session.returnTo = req.originUrl;
+    }
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
