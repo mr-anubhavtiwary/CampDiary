@@ -1,4 +1,8 @@
 // http://127.0.0.1:3000/campgrounds
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -17,7 +21,7 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 
 //database
-const url = "mongodb+srv://Anubhav:Anubhav%40152000@campdiary.lqd08s3.mongodb.net/?retryWrites=true&w=majority&appName=CampDiary"
+const url = process.env.DATABASE_KEY;
 
 mongoose.connect(url);
 
