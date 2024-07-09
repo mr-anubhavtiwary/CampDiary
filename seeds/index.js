@@ -8,9 +8,9 @@ const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campground');
 const axios = require("axios");
 
-// const uri = process.env.DATABASE_KEY;
+const uri = process.env.DATABASE_KEY;
 
-mongoose.connect('mongodb+srv://Anubhav:Anubhav%40152000@campdiary.lqd08s3.mongodb.net/?retryWrites=true&w=majority&appName=CampDiary');
+mongoose.connect(uri);
 
 const db = mongoose.connection;
 
