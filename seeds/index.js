@@ -8,9 +8,9 @@ const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campground');
 const axios = require("axios");
 
-const url = process.env.DATABASE_KEY;
+// const uri = process.env.DATABASE_KEY;
 
-mongoose.connect(url);
+mongoose.connect('mongodb+srv://Anubhav:Anubhav%40152000@campdiary.lqd08s3.mongodb.net/?retryWrites=true&w=majority&appName=CampDiary');
 
 const db = mongoose.connection;
 
@@ -38,16 +38,36 @@ async function seedImg() {
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 50; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
         const camp = new Campground({
             author: '66843340b478716c7d4c2116',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
-            images: await seedImg(),
+            // images: await seedImg(),
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             price: price,
+            geometry: {
+                type: "Point",
+                coordinates: [
+                    cities[random1000].longitude,
+                    cities[random1000].latitude,
+                ]
+            },
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/dfkfnauuf/image/upload/v1720437158/samples/landscapes/nature-mountains.jpg',
+                    filename: 'YelpCamp/nature-mountains'
+                    // filename: 'samples/landscapes/nature-mountains'
+                    
+                },
+                {
+                    url: 'https://res.cloudinary.com/dfkfnauuf/image/upload/v1720437176/samples/balloons.jpg',
+                    filename: 'YelpCamp/balloons'
+                    // filename: 'samples/balloons'
+                }
+            ]
         })
         await camp.save();
     }
